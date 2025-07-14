@@ -14,10 +14,12 @@ function FormPart() {
     guardianPhone: "",
     localAddress: "",
     permanentAddress: "",
-    status: "",
+    status: "student",
     qualification: "",
     year: "",
     college: "",
+    designation:"",
+    company:"",
     course: "",
     source: "",
   });
@@ -38,10 +40,19 @@ function FormPart() {
         }));
       }
     } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setFormData((prev) => {
+        let updatedData = { ...prev, [name]: value }
+        if (name === "status" && value === "student") {
+          updatedData.qualification = "";
+          updatedData.year = "";
+          updatedData.college = ""
+        }
+        if (name === "status" && value === "working") {
+          updatedData.designation = "";
+          updatedData.company = "";
+        }
+        return updatedData
+      });
     }
   }
 
@@ -193,50 +204,90 @@ function FormPart() {
           <div className="form-group">
             <label>Status</label>
             <div className="radio-group">
-              {["Student", "Professional"].map((s) => (
-                <label key={s}>
-                  <input
-                    type="radio"
-                    name="status"
-                    value={s}
-                    checked={formData.status === s}
-                    onChange={handleFormData}
-                  />
-                  {s}
-                </label>
-              ))}
+
+              <input
+                type="radio"
+                name="status"
+                value="student"
+                checked={formData.status === "student"}
+                onChange={handleFormData}
+
+              />
+              <label htmlFor="">Student</label>
+
+            </div>
+            <div className="radio-group">
+
+              <input
+                type="radio"
+                name="status"
+                value="working"
+                checked={formData.status === "working"}
+                onChange={handleFormData}
+
+              />
+              <label htmlFor="">Working</label>
+
             </div>
           </div>
-          <div className="form-group">
-            <label>Qualification</label>
-            <input
-              type="text"
-              name="qualification"
-              placeholder="Your qualification"
-              value={formData.qualification}
-              onChange={handleFormData}
-            />
-          </div>
-          <div className="form-group">
-            <label>Year</label>
-            <input
-              type="text"
-              name="year"
-              placeholder="Year of completion"
-              value={formData.year}
-              onChange={handleFormData}
-            />
-          </div>
-          <div className="form-group">
-            <label>College</label>
-            <input
-              type="text"
-              name="college"
-              placeholder="College / University"
-              value={formData.college}
-              onChange={handleFormData}
-            />
-          </div>
+          {formData.status === "student" && (
+            <div>
+              <div className="form-group">
+                <label>Qualification</label>
+                <input
+                  type="text"
+                  name="qualification"
+                  placeholder="Your qualification"
+                  value={formData.qualification}
+                  onChange={handleFormData}
+                />
+              </div>
+              <div className="form-group">
+                <label>Year</label>
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Year of completion"
+                  value={formData.year}
+                  onChange={handleFormData}
+                />
+              </div>
+              <div className="form-group">
+                <label>College</label>
+                <input
+                  type="text"
+                  name="college"
+                  placeholder="College / University"
+                  value={formData.college}
+                  onChange={handleFormData}
+                />
+              </div>
+            </div>
+          )}
+          {formData.status === "working" && (
+            <div>
+              <div className="form-group">
+                <label>Designation</label>
+                <input
+                  type="text"
+                  name="designation"
+                  placeholder="Enter your designation"
+                  value={formData.designation}
+                  onChange={handleFormData}
+                />
+              </div>
+              <div className="form-group">
+                <label>Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Enter your Company Name"
+                  value={formData.company}
+                  onChange={handleFormData}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Course Section */}
@@ -274,7 +325,7 @@ function FormPart() {
           </div>
           <div className="form-group">
             <label>How did you come to know about us?</label>
-            <div className="radio-group">
+            <div className="radio-group socialMedia">
               {["Google", "LinkedIn", "Instagram", "College TPO", "Friend"].map(
                 (item) => (
                   <label key={item}>

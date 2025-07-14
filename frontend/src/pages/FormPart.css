@@ -70,6 +70,10 @@ textarea {
   flex-wrap: wrap;
 }
 
+.socialMedia{
+  width: 100% !important;
+  gap:0px !important;
+}
 .radio-group label,
 .checkbox-group label {
   margin: 0;
