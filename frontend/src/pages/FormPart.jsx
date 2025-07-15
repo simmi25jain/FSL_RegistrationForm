@@ -18,10 +18,12 @@ function FormPart() {
     qualification: "",
     year: "",
     college: "",
-    designation:"",
-    company:"",
+    designation: "",
+    company: "",
     course: "",
+    customCourse: "",
     source: "",
+    friendName: "",
   });
 
   function handleFormData(e) {
@@ -58,8 +60,10 @@ function FormPart() {
 
   async function handleSubmitData(e) {
     e.preventDefault();
+    
+
     try {
-      const response = await instance.post("/details/add", formData);
+      const response = await instance.post("/details/add", finalData);
       if (response.status === 200) {
         setMessage({
           type: "success",
@@ -323,6 +327,18 @@ function FormPart() {
               ))}
             </select>
           </div>
+          {formData.course === "Other Course" && (
+            <div className="form-group">
+              <label>Enter your course</label>
+              <input
+                type="text"
+                name="customCourse"
+                placeholder="Enter the course name"
+                value={formData.customCourse}
+                onChange={handleFormData}
+              />
+            </div>
+          )}
           <div className="form-group">
             <label>How did you come to know about us?</label>
             <div className="radio-group socialMedia">
@@ -342,6 +358,18 @@ function FormPart() {
               )}
             </div>
           </div>
+          {formData.source === "Friend" && (
+            <div className="form-group">
+              <label>Friend's Name:</label>
+              <input
+                type="text"
+                name="friendName"
+                placeholder="Enter friend's name"
+                value={formData.friendName}
+                onChange={handleFormData}
+              />
+            </div>
+          )}
         </div>
 
         {/* Submit Section */}
