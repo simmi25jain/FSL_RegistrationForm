@@ -60,10 +60,16 @@ function FormPart() {
 
   async function handleSubmitData(e) {
     e.preventDefault();
-    
+    const finalData = {
+      ...formData,
+      course:
+        formData.course === "Other Course" ? formData.customCourse : formData.course,
+      friendName:
+        formData.source === "Friend" ? formData.friendName : "",
+    };
 
     try {
-      const response = await instance.post("/details/add", finalData);
+      const response = await instance.post("/api/details/add", finalData);
       if (response.status === 200) {
         setMessage({
           type: "success",
@@ -249,7 +255,7 @@ function FormPart() {
               <div className="form-group">
                 <label>Year</label>
                 <input
-                  type="text"
+                  type="number"
                   name="year"
                   placeholder="Year of completion"
                   value={formData.year}
