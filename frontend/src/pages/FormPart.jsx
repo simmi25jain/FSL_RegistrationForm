@@ -204,6 +204,7 @@ function FormPart() {
               placeholder="Enter your permanent address"
               value={formData.permanentAddress}
               onChange={handleFormData}
+              readOnly
             />
           </div>
         </div>
