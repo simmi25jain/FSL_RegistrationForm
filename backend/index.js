@@ -5,7 +5,7 @@ import cors from "cors"
 import { connectToDB } from "./config/db.js";
 import detailsRouter from "./routes/detailsRoutes.js";
 
-const port = process.enc.PORT;
+const port = process.env.PORT;
 const app = express();
 
 await connectToDB();
