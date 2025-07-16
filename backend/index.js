@@ -5,19 +5,21 @@ import cors from "cors"
 import { connectToDB } from "./config/db.js";
 import detailsRouter from "./routes/detailsRoutes.js";
 
-const port = 4000;
+const port = process.enc.PORT;
 const app = express();
 
 await connectToDB();
 
 const corsOption = {
-    origin: "http://localhost:5173"
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }
 
 app.use(cors(corsOption))
 app.use(express.json())
 
-app.use("/api/details",detailsRouter)
+app.use("/api/details", detailsRouter)
 
 // app.post("/api/details/add", async (req, res) => {
 //     try {
